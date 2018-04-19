@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="domain.UserMapper">
+  <resultMap id="BaseResultMap" type="model.User">
+    <id column="username" jdbcType="VARCHAR" property="username" />
+    <result column="pswmd5" jdbcType="VARCHAR" property="pswmd5" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="headimage" jdbcType="VARCHAR" property="headimage" />
+    <result column="regtime" jdbcType="DATE" property="regtime" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="wexin" jdbcType="VARCHAR" property="wexin" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="expert" jdbcType="BIT" property="expert" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    username, pswmd5, salt, headimage, regtime, phone, addr, email, wexin, qq, description, 
+    expert
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <select id="selectExperts"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where expert = true
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from users
+    where username = #{username,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="model.User">
+    insert into users (username, pswmd5, salt, 
+      headimage, regtime, phone, 
+      addr, email, wexin, 
+      qq, description, expert
+      )
+    values (#{username,jdbcType=VARCHAR}, #{pswmd5,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{headimage,jdbcType=VARCHAR}, #{regtime,jdbcType=DATE}, #{phone,jdbcType=VARCHAR}, 
+      #{addr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{wexin,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{expert,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="model.User">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="pswmd5 != null">
+        pswmd5,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="headimage != null">
+        headimage,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="wexin != null">
+        wexin,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="expert != null">
+        expert,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="pswmd5 != null">
+        #{pswmd5,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="headimage != null">
+        #{headimage,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=DATE},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wexin != null">
+        #{wexin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="expert != null">
+        #{expert,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.User">
+    update users
+    <set>
+      <if test="pswmd5 != null">
+        pswmd5 = #{pswmd5,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="headimage != null">
+        headimage = #{headimage,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=DATE},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wexin != null">
+        wexin = #{wexin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="expert != null">
+        expert = #{expert,jdbcType=BIT},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.User">
+    update users
+    set pswmd5 = #{pswmd5,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      headimage = #{headimage,jdbcType=VARCHAR},
+      regtime = #{regtime,jdbcType=DATE},
+      phone = #{phone,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      wexin = #{wexin,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      expert = #{expert,jdbcType=BIT}
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+</mapper>

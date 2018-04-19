@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="domain.LeisureMapper">
+  <resultMap id="BaseResultMap" type="model.Leisure">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="clubname" jdbcType="VARCHAR" property="clubname" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="titile" jdbcType="VARCHAR" property="titile" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, clubname, type, titile, content, picture
+  </sql>
+  <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from leisure
+    where type = #{type,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from leisure
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="model.Leisure">
+    insert into leisure (id, clubname, type, 
+      titile, content, picture
+      )
+    values (#{id,jdbcType=INTEGER}, #{clubname,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{titile,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="model.Leisure">
+    insert into leisure
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="clubname != null">
+        clubname,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="titile != null">
+        titile,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="clubname != null">
+        #{clubname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="titile != null">
+        #{titile,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Leisure">
+    update leisure
+    <set>
+      <if test="clubname != null">
+        clubname = #{clubname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="titile != null">
+        titile = #{titile,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Leisure">
+    update leisure
+    set clubname = #{clubname,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      titile = #{titile,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

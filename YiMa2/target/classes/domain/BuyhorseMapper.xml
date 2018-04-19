@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="domain.BuyhorseMapper">
+  <resultMap id="BaseResultMap" type="model.Buyhorse">
+    <id column="username" jdbcType="VARCHAR" property="username" />
+    <result column="timest" jdbcType="TIMESTAMP" property="timest" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    username, timest, picture, description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from buyhorse
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from buyhorse
+    where username = #{username,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="model.Buyhorse">
+    insert into buyhorse (username, timest, picture, 
+      description)
+    values (#{username,jdbcType=VARCHAR}, #{timest,jdbcType=TIMESTAMP}, #{picture,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="model.Buyhorse">
+    insert into buyhorse
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="timest != null">
+        timest,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="timest != null">
+        #{timest,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Buyhorse">
+    update buyhorse
+    <set>
+      <if test="timest != null">
+        timest = #{timest,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Buyhorse">
+    update buyhorse
+    set timest = #{timest,jdbcType=TIMESTAMP},
+      picture = #{picture,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+</mapper>

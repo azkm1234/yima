@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="domain.ClubListMapper">
+  <resultMap id="BaseResultMap" type="model.ClubList">
+    <id column="clubname" jdbcType="VARCHAR" property="clubname" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="uploadtime" jdbcType="DATE" property="uploadtime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="history" jdbcType="VARCHAR" property="history" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    clubname, username, uploadtime, description, phone, contacts, addr, mail, website, 
+    history, picture
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from clublist
+    where clubname = #{clubname,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySize" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from clublist
+    order by uploadtime desc
+  </select>
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from clublist
+   	where username=#{username}
+   	order by uploadtime desc
+  </select>
+  <delete id="deleteByClubName" parameterType="java.lang.String">
+    delete from clublist
+    where clubname = #{clubname,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="model.ClubList">
+    insert into clublist (clubname, username, uploadtime, 
+      description, phone, contacts, 
+      addr, mail, website, 
+      history, picture)
+    values (#{clubname,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{uploadtime,jdbcType=DATE}, 
+      #{description,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
+      #{addr,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
+      #{history,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="model.ClubList">
+    insert into clublist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="clubname != null">
+        clubname,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="uploadtime != null">
+        uploadtime,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="contacts != null">
+        contacts,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="mail != null">
+        mail,
+      </if>
+      <if test="website != null">
+        website,
+      </if>
+      <if test="history != null">
+        history,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="clubname != null">
+        #{clubname,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null">
+        #{uploadtime,jdbcType=DATE},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null">
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="history != null">
+        #{history,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByClubNameSelective" parameterType="model.ClubList">
+    update clublist
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null">
+        uploadtime = #{uploadtime,jdbcType=DATE},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null">
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="history != null">
+        history = #{history,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where clubname = #{clubname,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.ClubList">
+    update clublist
+    set username = #{username,jdbcType=VARCHAR},
+      uploadtime = #{uploadtime,jdbcType=DATE},
+      description = #{description,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      history = #{history,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR}
+    where clubname = #{clubname,jdbcType=VARCHAR}
+  </update>
+</mapper>

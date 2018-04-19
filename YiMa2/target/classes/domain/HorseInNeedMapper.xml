@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="domain.HorseInNeedMapper">
+  <resultMap id="BaseResultMap" type="model.HorseInNeed">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="idinhorseonsale" jdbcType="INTEGER" property="idinhorseonsale" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="adress" jdbcType="VARCHAR" property="adress" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="speciality" jdbcType="VARCHAR" property="speciality" />
+    <result column="height" jdbcType="VARCHAR" property="height" />
+    <result column="parents" jdbcType="VARCHAR" property="parents" />
+    <result column="decription" jdbcType="VARCHAR" property="decription" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, idinhorseonsale, time, title, sex, type, adress, color, speciality, 
+    height, parents, decription, picture
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from horseinneed
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPojo" parameterType="model.HorseInNeed" resultType="model.HorseInNeed">
+  	select
+  	<include refid="Base_Column_List"/>
+  	from horseinneed
+  	<where>
+  		<if test="id != null">and id = #{ id}</if>
+  		<if test="username != null">and username=#{ username}</if>
+  		<if test="sex != null">and sex = #{ sex}</if>
+  		<if test="type != null">and type = #{ type}</if>
+  		<if test="color != null">and color = #{ color}</if>
+  		<if test="title != null">and title = #{ title}</if>
+  	</where>
+  	order by time desc, id desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from horseinneed
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="model.HorseInNeed">
+    insert into horseinneed (id, username, idinhorseonsale, 
+      time, title, sex, type, 
+      adress, color, speciality, 
+      height, parents, decription, 
+      picture)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{idinhorseonsale,jdbcType=INTEGER}, 
+      #{time,jdbcType=DATE}, #{title,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{adress,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{speciality,jdbcType=VARCHAR}, 
+      #{height,jdbcType=VARCHAR}, #{parents,jdbcType=VARCHAR}, #{decription,jdbcType=VARCHAR}, 
+      #{picture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="model.HorseInNeed">
+    insert into horseinneed
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="idinhorseonsale != null">
+        idinhorseonsale,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="adress != null">
+        adress,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="speciality != null">
+        speciality,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="parents != null">
+        parents,
+      </if>
+      <if test="decription != null">
+        decription,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="idinhorseonsale != null">
+        #{idinhorseonsale,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="adress != null">
+        #{adress,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null">
+        #{speciality,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="parents != null">
+        #{parents,jdbcType=VARCHAR},
+      </if>
+      <if test="decription != null">
+        #{decription,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.HorseInNeed">
+    update horseinneed
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="idinhorseonsale != null">
+        idinhorseonsale = #{idinhorseonsale,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="adress != null">
+        adress = #{adress,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null">
+        speciality = #{speciality,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="parents != null">
+        parents = #{parents,jdbcType=VARCHAR},
+      </if>
+      <if test="decription != null">
+        decription = #{decription,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.HorseInNeed">
+    update horseinneed
+    set username = #{username,jdbcType=VARCHAR},
+      idinhorseonsale = #{idinhorseonsale,jdbcType=INTEGER},
+      time = #{time,jdbcType=DATE},
+      title = #{title,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      adress = #{adress,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      speciality = #{speciality,jdbcType=VARCHAR},
+      height = #{height,jdbcType=VARCHAR},
+      parents = #{parents,jdbcType=VARCHAR},
+      decription = #{decription,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="domain.CommentlistMapper">
+  <resultMap id="BaseResultMap" type="model.Commentlist">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="idhorseonsale" jdbcType="INTEGER" property="idhorseonsale" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="time" jdbcType="DATE" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, idhorseonsale, comment, time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from commentlist
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPojo" parameterType="model.Commentlist" resultType="model.Commentlist">
+   select
+   <include refid="Base_Column_List" />
+   from commentlist
+   <where>
+   	   <if test="id != null">and id=#{ id}</if>
+	   <if test="username != null">and username=#{ username}</if>
+	   <if test="idhorseonsale != null">and idhorseonsale=#{ idhorseonsale}</if>
+   </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from commentlist
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="model.Commentlist">
+    insert into commentlist (id, username, idhorseonsale, 
+      comment, time)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{idhorseonsale,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{time,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="model.Commentlist">
+    insert into commentlist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="idhorseonsale != null">
+        idhorseonsale,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="idhorseonsale != null">
+        #{idhorseonsale,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Commentlist">
+    update commentlist
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="idhorseonsale != null">
+        idhorseonsale = #{idhorseonsale,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Commentlist">
+    update commentlist
+    set username = #{username,jdbcType=VARCHAR},
+      idhorseonsale = #{idhorseonsale,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
