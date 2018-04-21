@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import model.HorseOptions;
 import model.SessionPojo;
 import serviceinterface.HorseOnSaleService;
 import serviceinterface.SessionService;
+import vo.SessionVo;
 
 @RestController
 @RequestMapping("/sale_horse")
@@ -30,15 +32,15 @@ public class HorseOnSaleController {
 	HorseOnSaleService horseOnSaleService;
 	
 	@RequestMapping("/add")
-	public Object addHorseOnSale(@Valid HorseOnSale horseOnSale, @RequestParam String sessionId) {
+	public Object addHorseOnSale(@Valid HorseOnSale horseOnSale, BindingResult result, @Valid SessionVo session) {
 		if (horseOnSale.getAge() == null || horseOnSale.getAge() < 0) {
 			horseOnSale.setAge(0);
 		}
 		if (horseOnSale.getHeight() == null || horseOnSale.getHeight() < 0) {
-			horseOnSale.setHeight(null);
+			horseOnSale.setHeight(0);
 		}
 		horseOnSale.setTime(new Date());
-		SessionPojo sessionPojo = this.sessionService.get(sessionId);
+		SessionPojo sessionPojo = this.sessionService.get(session.getSessionId());
 		horseOnSale.setUsername(sessionPojo.getUsername());
 		this.horseOnSaleService.addOnSaleHorse(horseOnSale);
 		return Const.OK;
@@ -52,19 +54,19 @@ public class HorseOnSaleController {
 		return map;
 	}
 	@RequestMapping("/remove")
-	public Object removeHorseOnSale(@RequestParam Integer id, @RequestParam String sessionId) {
+	public Object removeHorseOnSale(@RequestParam Integer id, @Valid SessionVo session) {
 		this.horseOnSaleService.deleteHorseOnSaleById(id);
 		return Const.OK;
 	}
 	@RequestMapping("/update")
-	public Object updateHorseOnSale(@Valid HorseOnSale horseOnSale, @RequestParam String sessionId) {
+	public Object updateHorseOnSale(@Valid HorseOnSale horseOnSale, BindingResult result, @Valid SessionVo session) {
 		this.horseOnSaleService.updateSaleHorseById(horseOnSale);
 		return Const.OK;
 	}
 	
 	@RequestMapping(value="/search")
 	@ResponseBody
-	public Object getHorses(@RequestBody SearchHorseOption options, @RequestParam(defaultValue="1") Integer page) {
+	public Object getHorses(@Valid SearchHorseOption options, @RequestParam(defaultValue="1") Integer page) {
 		HashMap<String, Object> map = new HashMap<>();
 		options.setPageSize(Const.PAGESIZE);
 		options.setCurrentPage(page);

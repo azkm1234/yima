@@ -10,6 +10,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import serviceinterface.SessionService;
+import vo.SessionVo;
 
 @Aspect
 @Component
@@ -18,21 +19,24 @@ import serviceinterface.SessionService;
 public class SessionInterceptor {
 	@Autowired
 	private SessionService sessionService;
-	@Around(value = "execution(* controller.*.add*(..)) || " + 
-		"execution(* controller.*.update*(..)) || " + 
-		"execution(* controller.*.remove*(..))")
+	@Around(value = "execution(* controller.*.add*(..)) || "
+			+ "execution(* controller.*.update*(..)) || "
+			+ "execution(* controller.*.remove*(..)) "
+			+ "execution(* controller.MineController.*(..)")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object[] args = joinPoint.getArgs();
-		if (args.length == 2 && args[1] instanceof String) {
-			String sessionId = (String)args[1];
-			if (this.sessionService.containsKey(sessionId)) {
-				Object object = joinPoint.proceed();
-				return object;
-			} else {
-				throw new Exception("sessionId is not corrected");
+		int len = args.length;
+		for (int i = len - 1; i >= 0; i--) {
+			Object arg = args[i];
+			if (arg instanceof SessionVo) {
+				SessionVo session = (SessionVo)arg;
+				if (this.sessionService.containsKey(session.getSessionId())) {
+					Object object = joinPoint.proceed();
+					return object;
+				}
+				break;
 			}
-		} else {
-			return joinPoint.proceed();
 		}
+		throw new Exception("Äú»¹Î´µÇÂ¼£¡");
 	}
 }

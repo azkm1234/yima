@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+
 import domain.CommentlistMapper;
 import model.Commentlist;
 import serviceinterface.CommentListService;
@@ -26,7 +28,8 @@ public class CommentListServiceImpl implements CommentListService {
 	}
 
 	@Override
-	public List<Commentlist> serarchComment(Commentlist comment) {
+	public List<Commentlist> serarchComment(Commentlist comment, int page, int pageSize) {
+		PageHelper.startPage(page, pageSize);
 		return this.commentlistMapper.selectByPojo(comment);
 	}
 

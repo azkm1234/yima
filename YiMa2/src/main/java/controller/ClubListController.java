@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import conf.Const;
 import model.ClubList;
 import serviceinterface.ClubListService;
+import vo.SessionVo;
 
 @RestController
 @RequestMapping("/club")
@@ -30,19 +32,19 @@ public class ClubListController {
 	}
 	
 	@RequestMapping("/delete")
-	public Object deleteClubList(@RequestParam String clubName, String sessionId) throws Exception {
+	public Object deleteClubList(@RequestParam String clubName, @Valid SessionVo session) throws Exception {
 		this.clubListService.deleteByClubName(clubName);
 		return Const.OK;
 	}
 	
 	@RequestMapping("/update")
-	public Object updateClubList(ClubList clublist, String sessionId) throws Exception {
+	public Object updateClubList(ClubList clublist, @Valid SessionVo session, BindingResult result) throws Exception {
 		this.clubListService.updateByClubName(clublist);
 		return Const.OK;
 	}
 	
 	@RequestMapping("/add")
-	public Object addClubList(@Valid ClubList clublist, String sessionId) throws Exception {
+	public Object addClubList(@Valid ClubList clublist, BindingResult result, @Valid SessionVo session) throws Exception {
 		clublist.setUploadtime(new Date());
 		this.clubListService.updateByClubName(clublist);
 		return Const.OK;

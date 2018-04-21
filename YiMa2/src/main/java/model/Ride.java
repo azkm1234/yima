@@ -6,7 +6,8 @@ import com.sun.istack.internal.NotNull;
 
 public class Ride {
     private Integer id;
-
+    
+    @NotNull
     private String username;
 
     @NotNull

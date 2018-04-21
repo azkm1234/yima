@@ -1,13 +1,15 @@
 package model;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 public class LeisureRecommend {
     private Integer id;
 
+    @NotNull
     private String clubname;
     
-    @Valid
+    @NotNull
     private String description;
 
     private String phone;

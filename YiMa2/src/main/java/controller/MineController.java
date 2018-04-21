@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import serviceinterface.ClubListService;
 import serviceinterface.HorseOnSaleService;
 import serviceinterface.SessionService;
 import serviceinterface.TransportCompanyService;
+import vo.SessionVo;
 
 @RestController
 @RequestMapping("/mine")
@@ -29,9 +31,12 @@ public class MineController {
 	private SessionService sessionService;
 	
 	@RequestMapping("/horse_on_sale")
-	public Object getMyHorseOnSale(@RequestParam Integer page,@RequestParam String sessionId) {
+	public Object getMyHorseOnSale(@RequestParam Integer page,@Valid SessionVo session) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
-		SessionPojo sessionPojo = this.sessionService.get(sessionId);
+		SessionPojo sessionPojo = this.sessionService.get(session.getSessionId());
+		if (sessionPojo == null) {
+			throw new Exception("Äú»¹Ã»ÓÐµÇÂ¼£¡");
+		}
 		List<?> list = horseOnSaleService.selectHorseONSaleByUsername(sessionPojo.getUsername(), page, Const.PAGESIZE);
 		map.put(Const.LIST, list);
 		map.put(Const.SIZE, list.size());
@@ -39,9 +44,9 @@ public class MineController {
 	}
 	
 	@RequestMapping("/clubs")
-	public Object getMyClubs(@RequestParam Integer page,@RequestParam String sessionId) throws Exception {
+	public Object getMyClubs(@RequestParam Integer page,@Valid SessionVo session) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
-		SessionPojo sessionPojo = this.sessionService.get(sessionId);
+		SessionPojo sessionPojo = this.sessionService.get(session.getSessionId());
 		List<?> list = clubListService.searchClubListByUsername(sessionPojo.getUsername(), page, Const.PAGESIZE);
 		map.put(Const.LIST, list);
 		map.put(Const.SIZE, list.size());
@@ -49,9 +54,9 @@ public class MineController {
 	}
 	
 	@RequestMapping("/transports")
-	public Object getMyTransports(@RequestParam Integer page, @RequestParam String sessionId) throws Exception {
+	public Object getMyTransports(@RequestParam Integer page, @Valid SessionVo session) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
-		SessionPojo sessionPojo = this.sessionService.get(sessionId);
+		SessionPojo sessionPojo = this.sessionService.get(session.getSessionId());
 		List<?> list = transportCompanyService.searchByUsername(sessionPojo.getUsername(), page, Const.PAGESIZE);
 		map.put(Const.LIST, list);
 		map.put(Const.SIZE, list.size());

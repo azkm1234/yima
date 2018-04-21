@@ -2,6 +2,9 @@ package model;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+
 public class User {
     private String username;
 
@@ -23,6 +26,7 @@ public class User {
 
     private String qq;
 
+    @NotNull(message = "description can't be null")
     private String description;
 
     private Boolean expert;

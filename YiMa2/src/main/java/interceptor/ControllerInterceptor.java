@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
+import com.alibaba.fastjson.JSON;
+
 import conf.ErrorCode;
 import util.ResultTools;
 
@@ -29,24 +31,32 @@ public class ControllerInterceptor {
 		long startTime = System.currentTimeMillis();
 		String method = joinPoint.getSignature().getName();
 		String className = joinPoint.getClass().getName();
-		if (args.length > 1 && args[1] instanceof BindingResult) {
-			BindingResult bindingResult = (BindingResult)args[1];
-			if (bindingResult.hasErrors()) {
-				ObjectError objectError = bindingResult.getAllErrors().get(0);
-				return recordLog(ErrorCode.ERRORCODE_MISSING_PARAM, 
-						objectError.getDefaultMessage(),
-						"",
-						className,
-						startTime);
+		int len = args.length;
+		for (int i = len - 1; i >= 0; i--) {
+			Object arg = args[i];
+			if (arg instanceof BindingResult) {
+				BindingResult bindingResult = (BindingResult)arg;
+				if (bindingResult.hasErrors()) {
+					ObjectError objectError = bindingResult.getAllErrors().get(0);
+					return recordLog(ErrorCode.ERRORCODE_MISSING_PARAM, 
+							objectError.getDefaultMessage(),
+							"",
+							className,
+							startTime);
+				}
+				break;
 			}
+			
 		}
 		try {
 			logger.info("call params : " + Arrays.toString(args));
 			Object result = joinPoint.proceed();
+			logger.info("result : " + JSON.toJSONString(result));
 			return recordLog(ErrorCode.ERRORCODE_SUCCESS, "", result, className, startTime);
 		} catch (Throwable e) { 
 			logger.error("excute controller method : " + method + " failed");
-			return recordLog(ErrorCode.ERRORCODE_FAIL, e.getMessage(), "", className, startTime);
+			
+			return recordLog(ErrorCode.ERRORCODE_FAIL, e.getClass().getSimpleName() + " ->>> " + e.getMessage(), "", className, startTime);
 		}
 		
 	}

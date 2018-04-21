@@ -37,6 +37,8 @@ public class PictureUploadController {
 	private String projectName;
 	@Value("${port}")
 	private String port;
+	@Value("${path}")
+	private String path;
 	@Resource(name = "picturesService")
 	PictureService pictureService;
 	@Resource(name = "userService")
@@ -46,17 +48,12 @@ public class PictureUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(PictureUploadController.class);
 	
 	@RequestMapping(value = "/upload")  
-    public Object upload(@RequestParam(value = "file", required = false) MultipartFile file, 
-    		@RequestParam(value = "type", defaultValue = "horse")String uploadtype,
-    		String idOrName,
-    		@RequestParam(value = "tbName", defaultValue = "horseOnSale")String tbName,
-    		HttpServletRequest request, 
-    		ModelMap model) throws Exception {
+    public Object upload(@RequestParam(value = "file") MultipartFile file, 
+    		@RequestParam(value = "type", defaultValue = "horse")String type,
+    		@RequestParam String idOrName) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
 		logger.info("PictureUploadController   {}", "开始上传图片");
-        String path = "/usr/local/tomcats/upload";
         String fileName = getFileName();
-        
         File targetFile = new File(path, fileName);  
         if (!targetFile.getParentFile().exists()) {
         	targetFile.getParentFile().mkdirs();
@@ -64,7 +61,7 @@ public class PictureUploadController {
         Thumbnails.of(file.getInputStream()).size(200, 150).outputFormat("png").toFile(targetFile);
         String filepath = basePath + ":" + port + "/" + imagePath + "/" + targetFile.getName() + ".png";
         //将上传的图片同步到数据库连接
-        picUrlToDb(uploadtype, idOrName, filepath, tbName);
+        picUrlToDb(type, idOrName, filepath);
         map.put("path", filepath);
         logger.info("PictureUploadController  file:path = {}", filepath);
         return map; 
@@ -76,7 +73,7 @@ public class PictureUploadController {
 		return buffer.toString();
 	}
 	
-	private void picUrlToDb(String type, String idOrName, String path, String tbname) throws Exception {
+	private void picUrlToDb(String type, String idOrName, String path) throws Exception {
 		if (type.equals("person") && idOrName != null) {
 			User user = new User();
 			user.setUsername(idOrName);
@@ -90,17 +87,15 @@ public class PictureUploadController {
 		} else if (type.equals("picture")) {
 			Pictures picures = new Pictures();
 			picures.setPicture(path);
-			picures.setTbname(tbname); 
 			picures.setIdhorseonsale(Integer.parseInt(idOrName));
 			this.pictureService.insertPicture(picures);
 		}
 	}
 	
-	@RequestMapping(value = "/getPictures")
-	public Object getPictures(@RequestParam(value = "tbName", defaultValue = "horseOnSale")String tbname,
-			Integer id) {
+	@RequestMapping(value = "/get_pictures")
+	public Object getPictures(@RequestParam Integer id) {
 		HashMap<String, Object> map = new HashMap<>();
-		List<String> list = this.pictureService.selectPicture(tbname, id);
+		List<String> list = this.pictureService.selectPicture(null, id);
 		map.put(Const.SIZE, list.size());
 		map.put(Const.LIST, list);
 		return map;

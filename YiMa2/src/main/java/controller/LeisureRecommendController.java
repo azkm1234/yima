@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import conf.Const;
 import model.LeisureRecommend;
 import serviceinterface.LeisureRecommendService;
+import vo.SessionVo;
 
 @RestController
 @RequestMapping("/leisure")
@@ -21,12 +22,12 @@ public class LeisureRecommendController {
 	@Autowired
 	private LeisureRecommendService leisureRecommendService;
 	@RequestMapping("/add")
-	public Object addLeisureRecommend(@Valid LeisureRecommend leisureRecommend,@RequestParam String sessionId) throws Exception {
+	public Object addLeisureRecommend(@Valid LeisureRecommend leisureRecommend,@Valid SessionVo session) throws Exception {
 		this.leisureRecommendService.insertLeisureRecommend(leisureRecommend);
 		return Const.OK;
 	}
-	@RequestMapping("/removeByClubName")
-	public Object addLeisureRecommend(@Valid String clubName,@RequestParam String sessionId) throws Exception {
+	@RequestMapping("/remove_by_clubname")
+	public Object addLeisureRecommend(@Valid String clubName,@Valid SessionVo session) throws Exception {
 		this.leisureRecommendService.deleteByClubName(clubName);
 		return Const.OK;
 	}

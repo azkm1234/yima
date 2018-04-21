@@ -8,19 +8,17 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.alibaba.fastjson.JSONObject;
 
 import conf.Const;
 import model.SessionPojo;
 import model.TransportCompany;
 import serviceinterface.SessionService;
 import serviceinterface.TransportCompanyService;
+import vo.SessionVo;
 
 @RestController
 @RequestMapping("/company")
@@ -31,8 +29,8 @@ public class TransportCompanyController {
 	private SessionService sessionService;
 	
 	@RequestMapping("/add")
-	public Object addCompany(@Valid TransportCompany transportCompany,
-			@RequestParam String sessionId) throws Exception {
+	public Object addCompany(@Valid TransportCompany transportCompany, BindingResult result,
+			@Valid SessionVo session) throws Exception {
 		this.transportCompanyService.insertTransportCompany(transportCompany);
 		return Const.OK;
 	}
@@ -47,17 +45,17 @@ public class TransportCompanyController {
 		return map;
 	}
 	
-	@RequestMapping("/deleteByUserName")
+	@RequestMapping("/delete_by_username")
 	public Object deleteTransportCompany(@RequestParam String userName,
-			@RequestParam String sessionId) throws Exception {
+			@Valid SessionVo session) throws Exception {
 		this.transportCompanyService.deleteByUsername(userName);
 		return Const.OK;
 	}
 	
 	@RequestMapping(value="/upload")
-	public Object addMyTransport(@Valid TransportCompany tp, @RequestParam String sessionId) throws Exception {
+	public Object addMyTransport(@Valid TransportCompany tp, BindingResult result, @Valid SessionVo session) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
-		SessionPojo sessionPojo = this.sessionService.get(sessionId);
+		SessionPojo sessionPojo = this.sessionService.get(session.getSessionId());
 		tp.setUsername(sessionPojo.getUsername());
 		this.transportCompanyService.insertTransportCompany(tp);
 		return Const.OK;

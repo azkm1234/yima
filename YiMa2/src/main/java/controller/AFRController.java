@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.annotation.Resource;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ public class AFRController {
 		map.put(Const.SIZE, list);
 		return map;
 	}
-	
+
 	@RequestMapping("/recommend_horses")
 	public Object getRecommendHorse(@RequestParam Integer page) {
 		HashMap<String, Object> map = new HashMap<>();

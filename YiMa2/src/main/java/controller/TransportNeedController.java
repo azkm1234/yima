@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import conf.Const;
 import model.TransportNeed;
 import serviceinterface.TransportNeedService;
+import vo.SessionVo;
 
 @RestController
 @RequestMapping("/transport_need")
@@ -31,14 +32,14 @@ public class TransportNeedController {
 	
 	@RequestMapping("/deleteByUserName")
 	public Object deleteTransportNeedByUserName(@RequestParam String userName,
-			@RequestParam String sessionId) throws Exception {
+			@Valid SessionVo session) throws Exception {
 		this.transportNeedService.deleteByUsername(userName);
 		return Const.OK;
 	}
 	
 	@RequestMapping("/add")
 	public Object addTransportNeed(@Valid TransportNeed transportNeed,
-			@RequestParam String sessionId) throws Exception {
+			@Valid SessionVo session) throws Exception {
 		this.transportNeedService.insertTransportNeed(transportNeed);
 		return Const.OK;
 	}
