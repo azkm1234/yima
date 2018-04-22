@@ -28,4 +28,6 @@ public interface HorseOnSaleService {
 	public List<HorseOnSale> selectHorseONSaleByUsername(String username, int start, int pageSize);
 	
 	public List<HorseOnSale> selectHorseBySearchHorseOptions(SearchHorseOption options);
+	
+	public HorseOnSale selectById(Integer id);
 }

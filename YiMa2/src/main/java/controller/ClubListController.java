@@ -27,13 +27,13 @@ public class ClubListController {
 		List<ClubList> list = this.clubListService.searchClubList(page, Const.PAGESIZE);
 		HashMap<String, Object> map = new HashMap<>();
 		map.put(Const.LIST, list);
-		map.put(Const.MSG, Const.OK);
+		map.put(Const.SIZE, list.size());
 		return map;
 	}
 	
-	@RequestMapping("/delete")
-	public Object deleteClubList(@RequestParam String clubName, @Valid SessionVo session) throws Exception {
-		this.clubListService.deleteByClubName(clubName);
+	@RequestMapping("/delete_by_clubname")
+	public Object deleteClubList(@RequestParam String clubname, @Valid SessionVo session) throws Exception {
+		this.clubListService.deleteByClubName(clubname);
 		return Const.OK;
 	}
 	
@@ -46,7 +46,7 @@ public class ClubListController {
 	@RequestMapping("/add")
 	public Object addClubList(@Valid ClubList clublist, BindingResult result, @Valid SessionVo session) throws Exception {
 		clublist.setUploadtime(new Date());
-		this.clubListService.updateByClubName(clublist);
+		this.clubListService.insertClubList(clublist);
 		return Const.OK;
 	}
 	

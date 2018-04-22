@@ -6,7 +6,9 @@ import model.ClubActivity;
 
 public interface ClubActivityMapper {
     int deleteByClubName(String clubname);
-
+    
+    int deleteById(Integer id);
+    
     int insert(ClubActivity record);
 
     int insertSelective(ClubActivity record);

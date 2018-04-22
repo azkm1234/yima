@@ -22,19 +22,26 @@ public class ClubActivityController {
 	
 	@Resource(name = "clubActivityService")
 	ClubActivityService clubActivityService;
-	@RequestMapping("/get_by_clubName")
-	public Object getClubActivity(@RequestParam String clubName, @RequestParam Integer page) throws Exception {
+	@RequestMapping("/get_by_clubname")
+	public Object getClubActivity(@RequestParam String clubname, @RequestParam Integer page) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
 		List<ClubActivity> list = 
-				this.clubActivityService.searchByClubName(clubName, page, Const.PAGESIZE);
+				this.clubActivityService.searchByClubName(clubname, page, Const.PAGESIZE);
 		map.put(Const.LIST, list);
-		map.put(Const.MSG, Const.OK);
+		map.put(Const.SIZE, list.size());
 		return map;
 	}
 	
-	@RequestMapping("/delete_by_clubName")
+	@RequestMapping("/delete_by_clubname")
 	public Object deleteClubActivity(@RequestParam String clubName, @Valid SessionVo session, BindingResult result) throws Exception {
 		this.clubActivityService.deleteByClubName(clubName);
+		return Const.OK;
+	}
+	
+	@RequestMapping("delete")
+	public Object deleteById(@RequestParam Integer id,  
+			@Valid SessionVo session, BindingResult result) throws Exception {
+		this.clubActivityService.deleteById(id);
 		return Const.OK;
 	}
 	

@@ -9,4 +9,5 @@ public interface ClubActivityService {
 	void insertClubActivity(ClubActivity clubActivity) throws Exception;
 	void updateClubActivityByClubName(ClubActivity clubActivity) throws Exception;
 	void deleteByClubName(String clubName) throws Exception;
+	void deleteById(Integer id) throws Exception;
 }

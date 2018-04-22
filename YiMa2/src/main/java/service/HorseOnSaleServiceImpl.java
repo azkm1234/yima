@@ -181,4 +181,9 @@ public class HorseOnSaleServiceImpl implements HorseOnSaleService{
 		return this.horseOnSaleMapper.selectByRawSQL(new SqlVo(result));
 	}
 
+	@Override
+	public HorseOnSale selectById(Integer id) {
+		return this.horseOnSaleMapper.selectByPrimaryKey(id);
+	}
+
 }

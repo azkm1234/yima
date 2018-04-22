@@ -31,6 +31,10 @@
   </select>
   <delete id="deleteByClubName" parameterType="java.lang.String">
     delete from leisurerecommend
+    where clubname = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from leisurerecommend
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="model.LeisureRecommend">

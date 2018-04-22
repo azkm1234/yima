@@ -16,7 +16,6 @@ public class HorseInNeed {
 
     private String title;
     
-    @NotNull
     private String sex;
 
     private String type;

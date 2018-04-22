@@ -6,7 +6,9 @@ import model.LeisureRecommend;
 
 public interface LeisureRecommendMapper {
     int deleteByClubName(String clubname);
-
+    
+    int deleteById(Integer id);
+    
     int insert(LeisureRecommend record);
 
     int insertSelective(LeisureRecommend record);

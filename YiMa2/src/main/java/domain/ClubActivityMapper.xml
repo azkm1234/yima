@@ -22,6 +22,10 @@
     delete from clubactivity
     where clubname = #{clubname,jdbcType=VARCHAR}
   </delete>
+   <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from clubactivity
+    where id = #{id}
+  </delete>
   <insert id="insert" parameterType="model.ClubActivity">
     insert into clubactivity (id, username, clubname, 
       title, content, picture

@@ -36,4 +36,9 @@ public class LeisureRecommendServiceImpl implements LeisureRecommendService {
 		return this.leisureRecommendMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public void deleteById(Integer id) {
+		this.leisureRecommendMapper.deleteById(id);
+	}
+
 }

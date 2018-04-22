@@ -7,15 +7,10 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.alibaba.fastjson.JSONObject;
 
 import conf.Const;
 import model.SessionPojo;
@@ -34,7 +29,7 @@ public class UserController {
 	@Resource(name = "sessionService")
 	private SessionService sessionService;
 	
-	@RequestMapping("/login")
+	@RequestMapping(value = "/login", produces = {})
 	public Object login(@RequestParam String username,
 			@RequestParam(value = "pswmd5") String password) throws Exception {
 		Map<String, Object> map = new HashMap<>();

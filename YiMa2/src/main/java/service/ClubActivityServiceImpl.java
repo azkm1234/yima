@@ -36,4 +36,10 @@ public class ClubActivityServiceImpl implements ClubActivityService{
 		this.clubActivityMapper.deleteByClubName(clubName);
 	}
 
+	@Override
+	public void deleteById(Integer id) throws Exception {
+		this.clubActivityMapper.deleteById(id);
+		
+	}
+
 }

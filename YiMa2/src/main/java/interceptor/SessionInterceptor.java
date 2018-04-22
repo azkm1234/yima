@@ -30,7 +30,8 @@ public class SessionInterceptor {
 			Object arg = args[i];
 			if (arg instanceof SessionVo) {
 				SessionVo session = (SessionVo)arg;
-				if (this.sessionService.containsKey(session.getSessionId())) {
+				String sessionId = session.getSessionId();
+				if (this.sessionService.containsKey(sessionId)) {
 					Object object = joinPoint.proceed();
 					return object;
 				}

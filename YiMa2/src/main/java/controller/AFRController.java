@@ -26,7 +26,7 @@ public class AFRController {
 		HashMap<String, Object> map = new HashMap<>();
 		Collection<AutionResult> list = this.threeHorseService.findAuctionHorse(page, Const.PAGESIZE);
 		map.put(Const.SIZE, list.size());
-		map.put(Const.SIZE, list);
+		map.put(Const.LIST, list);
 		return map;
 	}
 
@@ -35,7 +35,7 @@ public class AFRController {
 		HashMap<String, Object> map = new HashMap<>();
 		Collection<RecommendResult> list = this.threeHorseService.findRecommendHorse(page, Const.PAGESIZE);
 		map.put(Const.SIZE, list.size());
-		map.put(Const.SIZE, list);
+		map.put(Const.LIST, list);
 		return map;
 	}
 	
@@ -44,7 +44,7 @@ public class AFRController {
 		HashMap<String, Object> map = new HashMap<>();
 		Collection<FineResult> list = this.threeHorseService.findFineHorseOnSale(page, Const.PAGESIZE);
 		map.put(Const.SIZE, list.size());
-		map.put(Const.SIZE, list);
+		map.put(Const.LIST, list);
 		return map;
 	}
 }

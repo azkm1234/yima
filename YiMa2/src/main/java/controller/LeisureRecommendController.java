@@ -27,8 +27,14 @@ public class LeisureRecommendController {
 		return Const.OK;
 	}
 	@RequestMapping("/remove_by_clubname")
-	public Object addLeisureRecommend(@Valid String clubName,@Valid SessionVo session) throws Exception {
+	public Object removeLeisureRecommend(@Valid String clubName,@Valid SessionVo session) throws Exception {
 		this.leisureRecommendService.deleteByClubName(clubName);
+		return Const.OK;
+	}
+	
+	@RequestMapping("/remove_by_id")
+	public Object removeById(@RequestParam Integer id, @Valid SessionVo session) {
+		this.leisureRecommendService.deleteById(id);
 		return Const.OK;
 	}
 	@RequestMapping("/get")

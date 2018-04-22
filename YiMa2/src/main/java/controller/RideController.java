@@ -32,8 +32,8 @@ public class RideController {
 	public Object getRide(@RequestParam Integer page) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
 		List<Ride> list = this.rideService.searchBySize(page, Const.PAGESIZE);
-		map.put(Const.SIZE, list.size());
 		map.put(Const.LIST, list);
+		map.put(Const.SIZE, list.size());
 		return map;
 	}
 	

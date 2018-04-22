@@ -1,14 +1,19 @@
 package model;
 
+import javax.validation.constraints.NotNull;
+
 public class ClubActivity {
     private Integer id;
 
+    @NotNull
     private String username;
-
+    
+    @NotNull
     private String clubname;
 
     private String title;
-
+    
+    @NotNull
     private String content;
 
     private String picture;

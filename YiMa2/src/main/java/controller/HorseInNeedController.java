@@ -49,7 +49,7 @@ public class HorseInNeedController {
 		HashMap<String, Object> map = new HashMap<>();
 		List<HorseInNeed> list = this.horseInNeedService.searchHorseInNeed(new HorseInNeed(), page, Const.PAGESIZE);
 		map.put(Const.LIST, list);
-		map.put(Const.MSG, Const.OK);
+		map.put(Const.SIZE, list.size());
 		return map;
 	}
 }

@@ -43,4 +43,9 @@ public class CommentController {
 		return map;
 	}
 	
+	@RequestMapping("/delete")
+	public Object deleteComment(@RequestParam Integer id, @Valid SessionVo session) {
+		this.commentListService.deleteCommentById(id);
+		return Const.OK;
+	}
 }

@@ -8,5 +8,6 @@ public interface LeisureRecommendService {
 	List<LeisureRecommend> searchBySize(int currentPage, int pageSize) throws Exception;
 	void insertLeisureRecommend(LeisureRecommend leisureRecommend) throws Exception;
 	void deleteByClubName(String clubname) throws Exception;
+	void deleteById(Integer id);
 	LeisureRecommend searchByPrimaryKey(int id) throws Exception;
 }
